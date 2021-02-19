@@ -1,15 +1,17 @@
 
 #include "command.h"
-#include <LibPrintf.h>
-#include <HardwareSerial.h>
+// #include <LibPrintf.h>
 
 void setup()
 {
-    Serial.begin(9600);
+    command_init();
 }
 
 void loop()
 {
-    int value = function();
-    printf("prompt>\r\n");
+    // char *var = "world";
+    // char str[strlen("\"hello %s\"\r\n")];
+    // sprintf(&str, "\"hello %s\"\r\n", var);
+    // Serial.print(str);
+    // printf("prompt>\r\n");
 }

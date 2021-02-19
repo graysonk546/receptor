@@ -3,14 +3,13 @@
 *                               Standard Includes
 *******************************************************************************/
 
-#include "stdio.h"
 #include <pt.h>
 
 /*******************************************************************************
 *                               Header File Includes
 *******************************************************************************/
 
-#include "command.h"
+#include "/home/graysonk546/Arduino/prototyping/receptor/receptor/utilities/util-vars.h"
 
 /*******************************************************************************
 *                               Static Functions
@@ -23,14 +22,22 @@
 /*******************************************************************************
 *                               Structures
 *******************************************************************************/
-
-typedef enum{
+typedef enum {
     COMMAND_OK,
     COMMAND_ERROR
-} command_status_t
+} command_status_t;
+
+typedef command_status_t (*command_func_t)(uint8_t argNumber, char* args[]);
+
+typedef struct {
+    command_func_t function;
+
+} command_t;
 
 /*******************************************************************************
 *                               Variables
 *******************************************************************************/
 
-command_status_t command_help(uint_8 argc, char* argv[]);
+command_status_t command_help(uint8_t argNumber, char* args[]);
+
+receptor_status_t command_init();
