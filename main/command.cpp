@@ -69,10 +69,20 @@ command_status_t command_help(uint8_t argNumber, char* args[])
 
 static int _commandTask(struct pt *thread)
 {
+    // Variablles to maintain value through context switches
+    static char byte = "\0";
+
     PT_BEGIN(thread);
     while (true)
     {
-        continue;
+        // if (Serial.available() > 0)
+        // {
+        //     byte = (char) Serial.read();
+        //     Serial.println(byte);
+        // }
+        PT_WAIT_UNTIL(thread, Serial.available() > 0);
+        byte = (char) Serial.read();
+        Serial.print(byte);
     }
     PT_END(thread)
 }
