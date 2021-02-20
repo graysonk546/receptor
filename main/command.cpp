@@ -17,9 +17,6 @@
 *                               Static Functions
 *******************************************************************************/
 
-// static void _commandTask(struct pt *thread);
-static int _commandTask(struct pt *thread);
-
 /*******************************************************************************
 *                               Constants
 *******************************************************************************/
@@ -37,14 +34,11 @@ static int _commandTask(struct pt *thread);
 static struct pt commandThread;
 
 /*******************************************************************************
-*                               Functions
+*                               Implementations
 *******************************************************************************/
 
 receptor_status_t command_init()
 {
-    // Initialize pt structure
-    PT_INIT(&commandThread);
-
     // Begin the serial connection
     Serial.begin(9600);
     long time;
@@ -57,32 +51,17 @@ receptor_status_t command_init()
     }
     Serial.println("Initialized serial port!");
 
-    // Start thread for handling CLI
-    _commandTask(&commandThread);
+    // Initialize pt structure
+    PT_INIT(&commandThread);
+}
+
+struct pt* command_getThread()
+{
+    return &commandThread;
 }
 
 command_status_t command_help(uint8_t argNumber, char* args[])
 {
     Serial.println("Command successful!");
     return COMMAND_OK;
-}
-
-static int _commandTask(struct pt *thread)
-{
-    // Variablles to maintain value through context switches
-    static char byte = "\0";
-
-    PT_BEGIN(thread);
-    while (true)
-    {
-        // if (Serial.available() > 0)
-        // {
-        //     byte = (char) Serial.read();
-        //     Serial.println(byte);
-        // }
-        PT_WAIT_UNTIL(thread, Serial.available() > 0);
-        byte = (char) Serial.read();
-        Serial.print(byte);
-    }
-    PT_END(thread)
 }

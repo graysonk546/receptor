@@ -38,6 +38,12 @@ typedef struct {
 *                               Variables
 *******************************************************************************/
 
+/*******************************************************************************
+*                               Function Declarations
+*******************************************************************************/
+
 command_status_t command_help(uint8_t argNumber, char* args[]);
 
 receptor_status_t command_init();
+
+struct pt* command_getThread();
