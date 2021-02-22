@@ -22,8 +22,9 @@
 *                               Constants
 *******************************************************************************/
 
-#define COMMAND_PROMPT       "receptor>"
+#define COMMAND_PROMPT       "receptor> "
 #define COMMAND_EOL          '\n'
+#define STRING_EOL           '\0'
 #define COMMAND_JSON         "JSON: "
 #define COMMAND_BUFF_MAX_LEN 100
 

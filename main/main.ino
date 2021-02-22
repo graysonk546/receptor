@@ -30,7 +30,7 @@ static char _commandTask(struct pt *thread);
 *******************************************************************************/
 // Pointers for task threads
 static struct pt* pt_command;
-// static struct pt* pt_networking;
+static struct pt* pt_networking;
 
 // Flags
 static bool flag;
@@ -50,14 +50,14 @@ void setup()
 
     // Get thread references
     pt_command = command_getThread();
-    // pt_networking = networking_getThread();
+    pt_networking = networking_getThread();
 }
 
 void loop()
 {
     // Looping achieves thread scheduling
-    // _networkingTask(pt_networking);
     _commandTask(pt_command);
+    _networkingTask(pt_networking);
 }
 
 /*******************************************************************************
@@ -74,17 +74,18 @@ static PT_THREAD(_commandTask(struct pt *thread))
         if (command_readLine(Serial.read()))
         {
             command_echoCommand(command_getLine());
+            Serial.print(COMMAND_PROMPT);
         }
     }
     PT_END(thread);
 }
 
-// static PT_THREAD(_networkingTask(struct pt *thread))
-// {
-//     PT_BEGIN(thread);
-//     while (true)
-//     {
-//
-//     }
-//     PT_END(thread);
-// }
+static PT_THREAD(_networkingTask(struct pt *thread))
+{
+    PT_BEGIN(thread);
+    while (true)
+    {
+        PT_WAIT_UNTIL(thread, flag == false);
+    }
+    PT_END(thread);
+}

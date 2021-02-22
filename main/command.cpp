@@ -54,6 +54,7 @@ receptor_status_t command_init()
         }
     }
     Serial.println("Initialized serial port!");
+    Serial.print(COMMAND_PROMPT);
 
     // Initialize pt structure
     PT_INIT(&commandThread);
@@ -61,9 +62,9 @@ receptor_status_t command_init()
 
 bool command_readLine(char *byte)
 {
-    if (byte == '\n')
+    if (byte == COMMAND_EOL)
     {
-        commandLine.line[commandLine.index] = '\0';
+        commandLine.line[commandLine.index] = STRING_EOL;
         commandLine.index = 0;
         return true;
     }
@@ -83,7 +84,7 @@ char* command_parseCommand(char *line)
 void command_echoCommand(command_line_t *command)
 {
     uint8_t i = 0;
-    while (command->line[i] != '\0')
+    while (command->line[i] != STRING_EOL)
     {
         Serial.print(command->line[i]);
         i++;
