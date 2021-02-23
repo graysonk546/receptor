@@ -15,7 +15,7 @@
 *******************************************************************************/
 
 static char _commandTask(struct pt *thread);
-// static char _networkingTask(struct pt *thread);
+static char _networkingTask(struct pt *thread);
 
 /*******************************************************************************
 *                               Constants
